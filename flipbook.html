@@ -1,0 +1,137 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#073b70">
+<title>cOACHsir Online Academy | Interactive Prospectus 2026–2027</title>
+<style>
+:root{--navy:#073b70;--blue:#0879c9;--cyan:#20c6df;--gold:#f2bd45;--ink:#17324d;--muted:#5e7184;--paper:#fff;--bg:#eaf4fb}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at 20% 10%,#fff 0,#eaf5fc 45%,#d7eaf7 100%);color:var(--ink);min-height:100vh}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 4vw;background:#fff;border-bottom:1px solid #d8e7f1;box-shadow:0 3px 18px #123a5a12}
+.brand{display:flex;align-items:center;gap:10px;color:var(--navy);font-weight:900;letter-spacing:.3px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,var(--navy),var(--blue));display:grid;place-items:center;color:#fff;font-weight:900;border:2px solid var(--gold);box-shadow:0 4px 12px #0879c944}.brand small{display:block;font-size:10px;letter-spacing:2px;color:var(--blue);margin-top:2px}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:24px;padding:10px 16px;background:var(--navy);color:white;font-weight:700;cursor:pointer;text-decoration:none;font-size:13px}.btn.secondary{background:#e8f5fc;color:var(--navy);border:1px solid #b9d9eb}.btn.gold{background:var(--gold);color:#17324d}
+main{max-width:1100px;margin:24px auto;padding:0 16px}.intro{text-align:center;margin:12px auto 20px}.intro h1{font-size:clamp(22px,4vw,34px);color:var(--navy);margin:0 0 6px}.intro p{margin:0;color:var(--muted);font-size:14px}
+.viewer{display:flex;align-items:center;justify-content:center;gap:14px}.nav{width:44px;height:44px;flex:0 0 44px;border:0;border-radius:50%;background:#fff;color:var(--navy);font-size:25px;box-shadow:0 4px 16px #16476a20;cursor:pointer}.book-wrap{width:min(820px,calc(100vw - 110px));perspective:1800px}.book{position:relative;width:100%;aspect-ratio:1.414/1;min-height:430px;max-height:610px;transform-style:preserve-3d;filter:drop-shadow(0 18px 25px #123b5c22)}
+.page{position:absolute;inset:0;background:var(--paper);border-radius:10px;overflow:hidden;display:none;padding:clamp(22px,4vw,48px);border:1px solid #d6e6ef}.page.active{display:block;animation:appear .35s ease}.page:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,#fff0 70%,#dcebf544)}@keyframes appear{from{opacity:.5;transform:rotateY(-5deg)}to{opacity:1;transform:rotateY(0)}}
+.page-num{position:absolute;bottom:15px;right:24px;color:#7890a4;font-size:11px}.eyebrow{font-size:11px;letter-spacing:2.5px;color:var(--blue);font-weight:800;text-transform:uppercase}.page h2{font-size:clamp(24px,3.3vw,38px);line-height:1.1;color:var(--navy);margin:12px 0}.page h3{color:var(--blue);margin:0 0 7px;font-size:17px}.page p,.page li{font-size:clamp(12px,1.45vw,15px);line-height:1.55;color:#405a70}.page ul{padding-left:19px;margin:8px 0}.rule{height:4px;width:68px;background:var(--gold);border-radius:9px;margin:14px 0 20px}.cover{background:linear-gradient(135deg,#fafdff 0%,#e6f6ff 56%,#d4eff9 100%);display:none}.cover.active{display:block}.cover:before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;right:-100px;top:-120px;border:32px solid #20c6df22}.cover:after{content:"";position:absolute;width:230px;height:230px;border-radius:50%;right:55px;bottom:-150px;background:#f2bd4528}
+.cover-inner{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:center;max-width:78%}.wordmark{font-size:clamp(30px,5vw,58px);font-weight:950;letter-spacing:-2px;color:var(--navy)}.wordmark span{color:var(--blue)}.cover-tag{font-size:clamp(14px,2vw,20px);font-weight:700;color:#315b79;margin:10px 0 22px}.pill{display:inline-block;background:#fff;border:1px solid #c6e3f2;border-radius:30px;padding:8px 13px;color:var(--navy);font-size:11px;font-weight:800;letter-spacing:.5px;width:max-content}.offer{margin-top:25px;background:var(--navy);color:#fff;padding:15px 20px;border-radius:14px;max-width:360px;box-shadow:0 8px 18px #073b7030}.offer strong{display:block;color:var(--gold);font-size:clamp(25px,4vw,38px)}.offer small{font-size:11px;color:#e6f7ff}.cover-foot{margin-top:25px;color:#42647d;font-size:12px;font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.tile{background:#f1f8fc;border:1px solid #d7eaf4;border-radius:12px;padding:14px}.tile h3{font-size:15px}.tile p{margin:0;font-size:12px}.step{display:flex;gap:12px;margin:12px 0;align-items:flex-start}.num{width:30px;height:30px;flex:0 0 30px;border-radius:9px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800}.step p{margin:2px 0}.cycle{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:22px}.cycle div{text-align:center;padding:13px 5px;background:#eaf7fc;border-radius:10px;font-size:11px;font-weight:800;color:var(--navy)}.cycle b{display:block;color:var(--blue);font-size:20px;margin-bottom:5px}
+.director{background:linear-gradient(135deg,#f6fcff,#e7f5fb)}.director-box{margin-top:30px;padding:24px;border-left:5px solid var(--gold);background:#fff;border-radius:0 15px 15px 0;box-shadow:0 8px 24px #16476a10}.director-name{font-size:clamp(25px,4vw,42px);font-weight:900;color:var(--navy);letter-spacing:1px}.qualification{font-size:18px;color:var(--blue);font-weight:800;margin:8px 0}.offer-big{font-size:clamp(40px,7vw,68px);font-weight:950;color:var(--navy);margin:8px 0}.offer-big small{font-size:18px;color:var(--blue)}.contact{background:#f0f8fc;border-radius:12px;padding:14px;margin:10px 0;overflow-wrap:anywhere}.contact a{color:var(--blue);font-weight:700;text-decoration:none}.disclaimer{font-size:10px!important;color:#6f8291!important;margin-top:14px}
+.controls{display:flex;align-items:center;justify-content:center;gap:12px;margin:17px 0 8px}.progress{font-size:12px;color:#527087;min-width:75px;text-align:center;font-weight:700}.dots{display:flex;justify-content:center;gap:6px;margin:8px}.dot{width:7px;height:7px;border-radius:50%;background:#b7d0df}.dot.on{background:var(--blue);width:20px;border-radius:8px}
+footer{text-align:center;color:#6c8293;font-size:11px;padding:10px 12px 22px}
+@media(max-width:650px){header{padding:10px 12px}.brand{font-size:13px}.top-actions .btn{padding:8px 10px;font-size:11px}.intro{margin:15px 0}.viewer{gap:5px}.nav{width:34px;height:34px;flex-basis:34px;font-size:20px}.book-wrap{width:calc(100vw - 82px)}.book{aspect-ratio: .78;min-height:520px;max-height:72vh}.page{padding:22px 19px}.grid2{gap:8px}.tile{padding:10px}.cycle{grid-template-columns:repeat(2,1fr)}.cover-inner{max-width:95%}.cover:before{width:210px;height:210px;right:-100px}.offer{padding:12px 15px}.page p,.page li{font-size:13px}}
+@media print{body{background:#fff}header,.intro,.nav,.controls,.dots,footer{display:none!important}main{margin:0;padding:0}.viewer,.book-wrap{display:block;width:100%}.book{height:auto;max-height:none;min-height:0;aspect-ratio:auto;filter:none}.page,.page.active{position:relative;display:block!important;min-height:190mm;border:0;border-radius:0;page-break-after:always;animation:none}.page:last-child{page-break-after:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">cS</div><div>cOACHsir<small>ONLINE ACADEMY</small></div></div>
+  <div class="top-actions">
+    <a class="btn secondary" href="https://vkplkmr-dotcom.github.io/coachsir--website/" target="_blank" rel="noopener">Website</a>
+    <a class="btn gold" href="https://wa.me/917017483588" target="_blank" rel="noopener">Enquire Now</a>
+  </div>
+</header>
+<main>
+  <div class="intro"><h1>Interactive Digital Prospectus</h1><p>Session 2026–2027 · Turn the pages to explore COACHsir Online Academy</p></div>
+  <div class="viewer">
+    <button class="nav" id="prev" aria-label="Previous page">‹</button>
+    <div class="book-wrap"><div class="book" id="book">
+      <section class="page cover active">
+        <div class="cover-inner">
+          <span class="pill">SESSION 2026–2027 · ADMISSIONS OPEN</span>
+          <div class="wordmark">cOACH<span>sir</span></div>
+          <div class="eyebrow">ONLINE ACADEMY</div>
+          <div class="rule"></div>
+          <div class="cover-tag">Learn with Understanding.<br>Grow with Confidence.</div>
+          <p>Online Classes · NCERT-Based Learning · CBT Practice · Performance Support</p>
+          <div class="offer"><small>MONTHLY STUDENT OFFER</small><strong>₹699 / MONTH</strong><small>Online learning + eligible 5G mobile recharge benefit*</small></div>
+          <div class="cover-foot">Class 9–10 Science & Mathematics · Class 11–12 PCB · NEET Preparation</div>
+        </div><span class="page-num">01 / 06</span>
+      </section>
+      <section class="page">
+        <span class="eyebrow">01 · Welcome</span><h2>Welcome to COACHsir Online Academy</h2><div class="rule"></div>
+        <p>At cOACHsir Online Academy, our goal is simple: <b>not learning only — understanding.</b> We help students build strong concepts, practise consistently and prepare for examinations with confidence.</p>
+        <p>Our learning approach combines clear explanations, NCERT-focused study, regular question practice and performance feedback. Students can learn online while following a structured academic routine.</p>
+        <h3>Our Learning Approach</h3>
+        <div class="grid2">
+          <div class="tile"><h3>Concept Clarity</h3><p>Build a strong foundation before moving to advanced questions.</p></div>
+          <div class="tile"><h3>NCERT Focus</h3><p>Study important concepts, definitions, diagrams and examples.</p></div>
+          <div class="tile"><h3>Regular Practice</h3><p>Strengthen understanding through questions and CBT practice.</p></div>
+          <div class="tile"><h3>Progress Review</h3><p>Identify topics that need revision and further practice.</p></div>
+        </div><span class="page-num">02 / 06</span>
+      </section>
+      <section class="page">
+        <span class="eyebrow">02 · Academic Programmes</span><h2>Courses Offered</h2><div class="rule"></div>
+        <div class="grid2">
+          <div class="tile"><h3>CLASS 9–10</h3><p><b>Science</b><br><b>Mathematics</b><br>Strong school-level concepts and exam-focused practice.</p></div>
+          <div class="tile"><h3>CLASS 11–12 (PCB)</h3><p><b>Physics · Chemistry · Biology</b><br>NCERT-focused learning and board-oriented preparation.</p></div>
+          <div class="tile"><h3>NEET PREPARATION</h3><p>Biology concept building, NCERT-focused revision, MCQs, CBT practice and performance review.</p></div>
+          <div class="tile"><h3>IISER / NISER FOUNDATION</h3><p>Science concept enrichment, analytical thinking and practice-oriented preparation. Availability may vary.</p></div>
+        </div>
+        <h3 style="margin-top:22px">Who Can Benefit?</h3><p>Students who want concept clarity, a structured study routine, NCERT-aligned learning, regular question practice and online study support that fits around school.</p>
+        <span class="page-num">03 / 06</span>
+      </section>
+      <section class="page">
+        <span class="eyebrow">03 · Learning Experience</span><h2>How You Learn With Us</h2><div class="rule"></div>
+        <div class="step"><div class="num">01</div><div><h3>Live & Recorded Classes</h3><p>Learn through online lessons and revisit recordings where available.</p></div></div>
+        <div class="step"><div class="num">02</div><div><h3>NCERT-Based Study Material</h3><p>Focus on concepts, definitions, diagrams and exam-relevant points.</p></div></div>
+        <div class="step"><div class="num">03</div><div><h3>CBT Mock Tests</h3><p>Practise in a computer-based test format and build timed-test familiarity.</p></div></div>
+        <div class="step"><div class="num">04</div><div><h3>Performance Analysis</h3><p>Review available results and identify topics that need more practice.</p></div></div>
+        <div class="step"><div class="num">05</div><div><h3>WhatsApp Doubt Support</h3><p>Ask academic questions through the academy's support channel.</p></div></div>
+        <div class="step"><div class="num">06</div><div><h3>Digital Student Access</h3><p>Student digital-card and online access features may be provided according to course and account eligibility.</p></div></div>
+        <div class="cycle"><div><b>01</b>LEARN</div><div><b>02</b>PRACTISE</div><div><b>03</b>ANALYSE</div><div><b>04</b>IMPROVE</div></div>
+        <span class="page-num">04 / 06</span>
+      </section>
+      <section class="page director">
+        <span class="eyebrow">04 · Leadership</span><h2>About Director</h2><div class="rule"></div>
+        <div class="director-box">
+          <div class="director-name">K.S. SIKARWAR</div>
+          <div class="qualification">M.Sc., B.Ed.</div>
+          <p>Dedicated to helping students develop conceptual understanding, disciplined study habits and confidence in their academic journey.</p>
+          <p><b>Teaching philosophy:</b><br>“Not learning only — understanding.”</p>
+        </div>
+        <h3 style="margin-top:25px">A Focused Academic Approach</h3><p>Concept-first teaching · NCERT focus · Exam-oriented practice · Continuous improvement</p>
+        <div class="offer" style="margin-top:24px"><small>ONE MONTHLY PLAN</small><strong>₹699 / MONTH</strong><small>Study + eligible connectivity benefit*</small></div>
+        <p class="disclaimer">*5G recharge benefit is subject to eligibility, operator plan, recharge value and academy offer terms. Confirm exact inclusions before enrolment.</p>
+        <span class="page-num">05 / 06</span>
+      </section>
+      <section class="page">
+        <span class="eyebrow">05 · Admissions & Contact</span><h2>Start Your Learning Journey</h2><div class="rule"></div>
+        <div class="step"><div class="num">1</div><div><h3>Contact the Academy</h3><p>Use the website or WhatsApp support to ask about your preferred course.</p></div></div>
+        <div class="step"><div class="num">2</div><div><h3>Choose Your Course</h3><p>Confirm class, subjects, batch schedule, available features and course duration.</p></div></div>
+        <div class="step"><div class="num">3</div><div><h3>Confirm the Offer</h3><p>Ask about the ₹699 monthly plan and the eligibility and terms of the recharge benefit.</p></div></div>
+        <div class="step"><div class="num">4</div><div><h3>Complete Enrolment</h3><p>Follow the official enrolment and payment instructions shared by the academy.</p></div></div>
+        <div class="step"><div class="num">5</div><div><h3>Start Learning</h3><p>Use the access details provided after enrolment to attend classes and practise.</p></div></div>
+        <h3 style="margin-top:18px">Connect With COACHsir</h3>
+        <div class="contact"><b>Website</b><br><a href="https://vkplkmr-dotcom.github.io/coachsir--website/" target="_blank" rel="noopener">Visit COACHsir Online Academy</a><br><b>WhatsApp Support</b><br><a href="https://wa.me/917017483588" target="_blank" rel="noopener">+91 70174 83588 · Chat with us</a><br><b>CBT Practice Portal</b><br><a href="https://coachsiracademy.onlinetestpanel.com/" target="_blank" rel="noopener">Open CBT Test Portal</a></div>
+        <p class="disclaimer">Batch schedules, subject availability, test frequency and included features may vary by course. Confirm fees, duration, access validity, recharge benefit, refund/cancellation policy and all terms before payment. Academic progress depends on attendance, practice and individual effort. No specific rank, score or selection is guaranteed. Keep login credentials private and use official academy channels for support.</p>
+        <h3 style="text-align:center;margin-top:18px">cOACHsir ONLINE ACADEMY</h3><p style="text-align:center;font-weight:700;color:var(--navy)">Learn with Understanding. Grow with Confidence.</p>
+        <span class="page-num">06 / 06</span>
+      </section>
+    </div></div>
+    <button class="nav" id="next" aria-label="Next page">›</button>
+  </div>
+  <div class="controls"><button class="btn secondary" id="first">First Page</button><span class="progress" id="progress">Page 1 of 6</span><button class="btn secondary" id="last">Last Page</button><button class="btn" onclick="window.print()">Print / Save PDF</button></div>
+  <div class="dots" id="dots" aria-label="Page navigation"></div>
+</main>
+<footer>© 2026–2027 cOACHsir Online Academy · Use the arrows, swipe, or keyboard ← → to turn pages.</footer>
+<script>
+(() => {
+ const pages=[...document.querySelectorAll('.page')], dots=document.getElementById('dots');
+ let current=0, touchX=0;
+ pages.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i===0?' on':'');d.title='Go to page '+(i+1);d.setAttribute('aria-label',d.title);d.onclick=()=>show(i);dots.appendChild(d)});
+ function show(n){current=Math.max(0,Math.min(pages.length-1,n));pages.forEach((p,i)=>p.classList.toggle('active',i===current));[...dots.children].forEach((d,i)=>d.classList.toggle('on',i===current));document.getElementById('progress').textContent=`Page ${current+1} of ${pages.length}`;document.getElementById('prev').disabled=current===0;document.getElementById('next').disabled=current===pages.length-1}
+ document.getElementById('prev').onclick=()=>show(current-1);document.getElementById('next').onclick=()=>show(current+1);document.getElementById('first').onclick=()=>show(0);document.getElementById('last').onclick=()=>show(pages.length-1);
+ document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='PageDown')show(current+1);if(e.key==='ArrowLeft'||e.key==='PageUp')show(current-1);});
+ const book=document.getElementById('book');book.addEventListener('touchstart',e=>touchX=e.changedTouches[0].screenX,{passive:true});book.addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-touchX;if(Math.abs(dx)>45)show(current+(dx<0?1:-1));},{passive:true});
+ show(0);
+})();
+</script>
+</body></html>'''
+
+path = Path("/mnt/data/COACHsir_Interactive_Prospectus_2026-2027.html")
+path.write_text(html, encoding="utf-8")
+print(f"Created: {path} ({path.stat().st_size:,} bytes)")
